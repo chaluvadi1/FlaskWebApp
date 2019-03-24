@@ -1,14 +1,19 @@
-{% extends "layout.html" %} 
+{% extends "layout.html" %}
 {% block content %}
 <article class="media content-section">
-	<img class="rounded-circle article-img" src="{{ url_for('static', filename='profile_pics/' + post.author.image_file ) }}">
-	<div class="media-body">
-		<div class="article-metadata">
-			<a class="mr-2" href="{{ url_for('account') }}">{{ post.author.username }}</a>
-			<small class="text-muted">{{ post.date_posted.strftime("%Y-%m-%d") }}</small>
-		</div>
-		<h2>{{ post.title }}</h2>
-		<p class="article-content">{{ post.content }}</p>
-	</div>
+    <img class="rounded-circle article-img"
+         src="{{ url_for('static', filename='profile_pics/' + post.author.image_file ) }}">
+    <div class="media-body">
+        <div class="article-metadata">
+            {% if post.author.username != current_user.username %}
+            <a class="mr-2" href="#">{{ post.author.username }}</a>
+            {% else %}
+            <a class="mr-2" href="{{ url_for('account') }}">{{ post.author.username }}</a>
+            {% endif %}
+            <small class="text-muted">{{ post.date_posted.strftime("%Y-%m-%d") }}</small>
+        </div>
+        <h2>{{ post.title }}</h2>
+        <p class="article-content">{{ post.content }}</p>
+    </div>
 </article>
 {% endblock content %}
